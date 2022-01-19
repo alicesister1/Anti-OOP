@@ -1,6 +1,6 @@
 package main.dto;
 
-import main.EnumModel;
+import main.enums.EnumModel;
 
 /**
  * EnumModel은 Interface이므로 인스턴스가 아닌 타입이다. enum의 value 사용을 위한 DTO를 생성

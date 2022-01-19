@@ -1,12 +1,12 @@
-package test;
+package test.enums;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import java.util.List;
 import java.util.Map;
-import main.DiscountType;
-import main.EnumMapper;
 import main.dto.EnumValue;
+import main.enums.DiscountType;
+import main.enums.EnumMapper;
 import org.junit.jupiter.api.Test;
 
 class EnumMapperTest {

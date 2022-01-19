@@ -1,6 +1,9 @@
-package main;
+package main.service;
 
-public class PaymentService {
+import main.domain.Discount;
+import main.enums.DiscountType;
+
+public class PaymentServiceImpl implements PaymentService {
 
   public static final int DEFAULT_DISCOUNT_COUPON_PRICE = 1000;
 

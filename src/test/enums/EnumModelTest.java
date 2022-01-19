@@ -1,11 +1,11 @@
-package test;
+package test.enums;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import java.util.ArrayList;
 import java.util.List;
-import main.DiscountType;
-import main.EnumModel;
+import main.enums.DiscountType;
+import main.enums.EnumModel;
 import org.junit.jupiter.api.Test;
 
 class EnumModelTest {

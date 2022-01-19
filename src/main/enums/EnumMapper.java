@@ -1,4 +1,4 @@
-package main;
+package main.enums;
 
 import java.util.Arrays;
 import java.util.HashMap;
