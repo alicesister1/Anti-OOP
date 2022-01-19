@@ -12,43 +12,30 @@ public class PaymentService {
    * @return
    */
   public Discount getDiscount(long price, DiscountType discountType) {
-    long discountPrice;
-    switch (discountType) {
-      case NAVER:
-        discountPrice = (long) (price * 0.1);
-        break;
-      case DANAWA:
-        discountPrice = (long) (price * 0.15);
-        break;
-      case FANCAFE:
-        discountPrice = DEFAULT_DISCOUNT_COUPON_PRICE; // 기본 할인쿠폰 금액
-        if (price < discountPrice) {  // 상품금액이 할인쿠폰보다 적은경우 상품금액 전액 할인
-          discountPrice = price;
-        }
-        break;
-      default:
-        throw new IllegalStateException("Unexpected value: " + discountType);
-    }
+    long discountPrice = getDiscountPrice(price, discountType);
     return Discount.of(discountPrice);
   }
 
   public long payment(long price, DiscountType discountType) {
-    // 결제금액
-    long paymentAmount = price;
+    return price - getDiscountPrice(price, discountType);
+  }
+
+  private long getDiscountPrice(long price, DiscountType discountType) {
+    long discount = 0;
     switch (discountType) {
       case NAVER:
-        paymentAmount = (long) (price * 0.9);
+        discount = (long) (price * 0.1);
         break;
       case DANAWA:
-        paymentAmount = (long) (price * 0.85);
+        discount = (long) (price * 0.15);
         break;
       case FANCAFE:
-        paymentAmount = price - DEFAULT_DISCOUNT_COUPON_PRICE;
-        if (price < DEFAULT_DISCOUNT_COUPON_PRICE) {  // 상품금액이 할인쿠폰보다 적은경우 0원 결제
-          paymentAmount = 0;
+        discount = DEFAULT_DISCOUNT_COUPON_PRICE; // 기본 할인쿠폰 금액
+        if (price < discount) {  // 상품금액이 할인쿠폰보다 적은경우 상품금액 전액 할인
+          discount = price;
         }
         break;
     }
-    return paymentAmount;
+    return discount;
   }
 }
