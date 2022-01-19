@@ -15,30 +15,27 @@ public class PaymentServiceImpl implements PaymentService {
    * @return
    */
   public Discount getDiscount(long price, DiscountType discountType) {
-    long discountPrice = getDiscountPrice(price, discountType);
+    Discountable discountPolicy = getDiscounter(discountType);
+    long discountPrice = discountPolicy.getDiscountPrice(price);
     return Discount.of(discountPrice);
   }
 
   public long payment(long price, DiscountType discountType) {
-    return price - getDiscountPrice(price, discountType);
+    Discountable discountPolicy = getDiscounter(discountType);
+    long discountPrice = discountPolicy.getDiscountPrice(price);
+    return price - discountPrice;
   }
 
-  private long getDiscountPrice(long price, DiscountType discountType) {
-    long discount = 0;
+  private Discountable getDiscounter(DiscountType discountType) {
     switch (discountType) {
       case NAVER:
-        discount = (long) (price * 0.1);
-        break;
+        return new NaverDiscountPolicy();
       case DANAWA:
-        discount = (long) (price * 0.15);
-        break;
+        return new DanawaDiscountPolicy();
       case FANCAFE:
-        discount = DEFAULT_DISCOUNT_COUPON_PRICE; // 기본 할인쿠폰 금액
-        if (price < discount) {  // 상품금액이 할인쿠폰보다 적은경우 상품금액 전액 할인
-          discount = price;
-        }
-        break;
+        return new FancafeDiscountPolicy();
     }
-    return discount;
+
+    return Discountable.NONE;
   }
 }
